@@ -1,0 +1,12 @@
+{
+  "name": "overseer-lights-button",
+  "version": "1.0.0",
+  "description": "Interact with lights on Overseer using a GPIO button.",
+  "scripts": {
+    "start": "forever start -c python3 lights.py",
+    "stop": "forever stopall",
+    "deploy": "npm stop && git pull && npm start"
+  },
+  "author": "sheodox",
+  "license": "MIT"
+}
