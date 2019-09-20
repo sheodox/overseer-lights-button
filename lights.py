@@ -17,10 +17,12 @@ GPIO.setmode(GPIO.BOARD)
 pin = 7
 GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-def req(id):
-    print(urllib.request.urlopen(f'http://{config["overseer"]}/lights/toggle/{id}').read())
+def req():
+    req = urllib.request.Request(f'http://{config["overseer"]}/lights/toggle-several', data=json.dumps(config['groups']).encode('utf8'), headers={'content-type': 'application/json'})
+    print(f'http://{config["overseer"]}/lights/toggle-several')
+    print(urllib.request.urlopen(req).read())
 
-sequential = 0;
+sequential = 0
 try:
     while True:
         if GPIO.input(pin) == False:
@@ -31,8 +33,7 @@ try:
 
         if sequential == 4:
             print(f'button pressed at {datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")}')
-            req(1)
-            req(2)
+            req()
             time.sleep(1)
 
 except KeyboardInterrupt:
