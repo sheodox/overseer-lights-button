@@ -19,12 +19,16 @@ GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 def req():
-    request = urllib.request.Request(f'{config["overseer"]}/lights/toggle-several',
-                                     data=json.dumps(config['groups']).encode('utf8'),
-                                     headers={'content-type': 'application/json',
-                                              'authorization': f'Bearer {config["token"]}'})
+    try:
+        request = urllib.request.Request(f'{config["overseer"]}/lights/toggle-several',
+                                         data=json.dumps(config['groups']).encode('utf8'),
+                                         headers={'content-type': 'application/json',
+                                                  'authorization': f'Bearer {config["token"]}'})
 
-    print(urllib.request.urlopen(request).read())
+        print(urllib.request.urlopen(request).read())
+    except Exception as e:
+        print("Error toggling light groups!")
+        print(e)
 
 
 sequential = 0
