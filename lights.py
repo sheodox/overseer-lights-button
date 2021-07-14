@@ -24,7 +24,6 @@ def req():
                                      headers={'content-type': 'application/json',
                                               'authorization': f'Bearer {config["token"]}'})
 
-    print(f'http://{config["overseer"]}/lights/toggle-several')
     print(urllib.request.urlopen(request).read())
 
 
