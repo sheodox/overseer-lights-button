@@ -17,10 +17,16 @@ GPIO.setmode(GPIO.BOARD)
 pin = 7
 GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+
 def req():
-    req = urllib.request.Request(f'http://{config["overseer"]}/lights/toggle-several', data=json.dumps(config['groups']).encode('utf8'), headers={'content-type': 'application/json'})
+    request = urllib.request.Request(f'{config["overseer"]}/lights/toggle-several',
+                                     data=json.dumps(config['groups']).encode('utf8'),
+                                     headers={'content-type': 'application/json',
+                                              'authorization': f'Bearer {config["token"]}'})
+
     print(f'http://{config["overseer"]}/lights/toggle-several')
-    print(urllib.request.urlopen(req).read())
+    print(urllib.request.urlopen(request).read())
+
 
 sequential = 0
 try:
@@ -38,4 +44,3 @@ try:
 
 except KeyboardInterrupt:
     GPIO.cleanup()
-
