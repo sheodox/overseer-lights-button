@@ -21,7 +21,7 @@ GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 def req():
     try:
         request = urllib.request.Request(f'{config["overseer"]}/lights/toggle-several',
-                                         data=json.dumps(config['groups']).encode('utf8'),
+                                         data=json.dumps({"groups": config['groups']}).encode('utf8'),
                                          headers={'content-type': 'application/json',
                                                   'authorization': f'Bearer {config["token"]}'})
 
