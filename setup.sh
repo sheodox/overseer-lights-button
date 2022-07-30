@@ -10,6 +10,8 @@ cd $(pwd)
 python3 lights.py
 EOF
 
+chmod 744 start.sh
+
 cat << EOF > service/overseer-lights-button.service
 [Unit]
 Description=Start the Overseer Lights Button service
