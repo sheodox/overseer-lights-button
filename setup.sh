@@ -2,6 +2,14 @@
 
 mkdir -p service
 
+cat << EOF > start.sh
+#!/usr/bin/env bash
+
+cd $(pwd)
+
+python3 lights.py
+EOF
+
 cat << EOF > service/overseer-lights-button.service
 [Unit]
 Description=Start the Overseer Lights Button service
