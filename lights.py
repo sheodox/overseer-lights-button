@@ -4,6 +4,8 @@ import urllib.request
 from datetime import datetime
 import json
 
+DEBUG_LOGGING = False
+
 try:
     file = open('config.json')
     config = json.load(file)
@@ -17,6 +19,9 @@ GPIO.setmode(GPIO.BOARD)
 pin = 7
 GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+def debug_log(msg):
+    if (DEBUG_LOGGING):
+        print(msg)
 
 def req():
     try:
@@ -25,7 +30,7 @@ def req():
                                          headers={'content-type': 'application/json',
                                                   'authorization': f'Bearer {config["token"]}'})
 
-        print(urllib.request.urlopen(request).read())
+        debug_log(urllib.request.urlopen(request).read())
     except Exception as e:
         print("Error toggling light groups!")
         print(e)
@@ -41,7 +46,7 @@ try:
             sequential = 0
 
         if sequential == 4:
-            print(f'button pressed at {datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")}')
+            debug_log(f'button pressed at {datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")}')
             req()
             time.sleep(1)
 
